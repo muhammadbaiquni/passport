@@ -30,7 +30,7 @@ class ResourceOwner implements ResourceOwnerInterface
     {
         return $this->getValueByKey(
             $this->response,
-            Arr::get(static::$fields, 'id', 'id')
+            Arr::get(static::$fields, 'sub', 'sub')
         );
     }
 

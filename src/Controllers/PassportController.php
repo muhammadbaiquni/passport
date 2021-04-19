@@ -15,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Flarum\Http\UrlGenerator;
+use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 
 class PassportController implements RequestHandlerInterface
 {
@@ -38,6 +39,8 @@ class PassportController implements RequestHandlerInterface
             'clientSecret' => $this->settings->get('fof-passport.app_secret'),
             'redirectUri'  => $redirectUri,
             'settings'     => $this->settings
+        ], [
+            'optionProvider' => new HttpBasicAuthOptionProvider()
         ]);
     }
 
@@ -84,12 +87,13 @@ class PassportController implements RequestHandlerInterface
 
         $token = $provider->getAccessToken('authorization_code', compact('code'));
         $user  = $provider->getResourceOwner($token);
+        $email = $provider->getEmailFromToken($token);
 
         $response = $this->response->make(
             'passport', $user->getId(),
             function (Registration $registration) use ($user, $provider, $token) {
                 $registration
-                    ->provideTrustedEmail($user->getEmail())
+                    ->provideTrustedEmail($email)
                     ->setPayload($user->toArray());
             }
         );

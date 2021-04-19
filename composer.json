@@ -1,12 +1,13 @@
 {
-    "name": "fof/passport",
-    "description": "The OAuth2 (and Laravel passport) compatible oauth extension",
+    "name": "muhammadbaiquni/passport",
+    "description": "Fork of fof/Passport to OAuth2 with client_secret_basic",
     "keywords": [
         "flarum",
         "passport",
         "league",
         "oauth",
-        "oauth2"
+        "oauth2",
+        "client_secret_basic"
     ],
     "type": "flarum-extension",
     "license": "MIT",
@@ -36,7 +37,8 @@
     ],
     "require": {
         "flarum/core": "^0.1.0-beta.16",
-        "league/oauth2-client": "^2.3.0"
+        "league/oauth2-client": "^2.3.0",
+        "adhocore/jwt": "^1.1"
     },
     "replace": {
         "flagrow/passport": "*"
