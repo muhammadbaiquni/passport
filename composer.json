@@ -13,26 +13,10 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Daniël Klabbers",
-            "email": "daniel+flarum@klabbers.email",
-            "homepage": "https://hyn.me/"
-        },
-        {
-            "name": "Clark Winkelmann",
-            "email": "clark.winkelmann@gmail.com",
-            "homepage": "https://clarkwinkelmann.com/"
-        }
-    ],
-    "support": {
-        "issues": "https://github.com/FriendsOfFlarum/passport/issues",
-        "source": "https://github.com/FriendsOfFlarum/passport",
-        "forum": "https://discuss.flarum.org/d/5203"
-    },
-    "homepage": "https://friendsofflarum.org",
-    "funding": [
-        {
-            "type": "website",
-            "url": "https://opencollective.com/fof/donate"
+            "name": "Muhammad Baiquni",
+            "email": "muhammad.baiquni@gmail.com",
+            "homepage": "https://baiquni.net/",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -46,7 +30,7 @@
     },
     "extra": {
         "flarum-extension": {
-            "title": "FoF Passport",
+            "title": "Tbbid Oauth Passport",
             "category": "authentication",
             "icon": {
                 "name": "fas fa-key",
@@ -55,7 +39,7 @@
             }
         },
         "flagrow": {
-            "discuss": "https://discuss.flarum.org/d/5203"
+            "discuss": ""
         }
     },
     "autoload": {
