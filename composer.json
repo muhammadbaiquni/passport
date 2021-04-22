@@ -25,8 +25,7 @@
         "adhocore/jwt": "^1.1"
     },
     "replace": {
-        "flagrow/passport": "*",
-        "fof/passport": "*"
+        "flagrow/passport": "*"
     },
     "extra": {
         "flarum-extension": {
