@@ -1,6 +1,6 @@
 {
-    "name": "muhammadbaiquni/passport",
-    "description": "Fork of fof/Passport to OAuth2 with client_secret_basic",
+    "name": "muhammadbaiquni/tbbid-oauth-passport",
+    "description": "Fork of FoF/Passport to OAuth2 with client_secret_basic",
     "keywords": [
         "flarum",
         "passport",

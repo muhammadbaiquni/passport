@@ -4,6 +4,7 @@ namespace FoF\Passport;
 
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Extend;
+use Flarum\Frontend\Document;
 
 return [
     (new Extend\Frontend('forum'))
@@ -13,6 +14,10 @@ return [
         ->js(__DIR__ . '/js/dist/admin.js'),
 
     new Extend\Locales(__DIR__ . '/locale'),
+    
+    // Add Middleware for Logout
+    (new Extend\Middleware('forum'))
+        ->add(Middleware\LogoutMiddleware::class),
 
     (new Extend\Routes('forum'))
         ->get('/auth/passport', 'auth.passport', Controllers\PassportController::class),

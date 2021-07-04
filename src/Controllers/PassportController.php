@@ -23,6 +23,7 @@ class PassportController implements RequestHandlerInterface
     protected $response;
     protected $events;
     protected $url;
+    protected $email;
 
     public function __construct(ResponseFactory $response, SettingsRepositoryInterface $settings, Dispatcher $events, UrlGenerator $url)
     {
@@ -56,12 +57,12 @@ class PassportController implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $redirectUri = $this->url->to('forum')->route('auth.passport');
+        $redirectUri = $this->url->to('forum')->route('auth.passport'); 
 
-        $provider = $this->getProvider($redirectUri);
+        $provider = $this->getProvider($redirectUri); 
 
         $session     = $request->getAttribute('session');
-        $queryParams = $request->getQueryParams();
+        $queryParams = $request->getQueryParams(); 
 
         if ($error = Arr::get($queryParams, 'error')) {
             $hint = Arr::get($queryParams, 'hint');
@@ -69,7 +70,7 @@ class PassportController implements RequestHandlerInterface
             throw new Exception("$error: $hint");
         }
 
-        $code = Arr::get($queryParams, 'code');
+        $code = Arr::get($queryParams, 'code'); 
 
         if (!$code) {
             $authUrl = $provider->getAuthorizationUrl($this->getAuthorizationUrlOptions());
@@ -87,13 +88,26 @@ class PassportController implements RequestHandlerInterface
 
         $token = $provider->getAccessToken('authorization_code', compact('code'));
         $user  = $provider->getResourceOwner($token);
-        $email = $provider->getEmailFromToken($token);
+        $this->email = $provider->getEmailFromToken($token);
+        
+        $session->put('id_token_identity', $token->getValues()['id_token']);
+        
+        // -- test
+        //echo "<pre>";
+        //echo "provider:\n"; print_r($provider); echo "\n\n";
+        //echo "token:\n"; print_r($token); echo "\n\n";
+        //echo "user:\n"; print_r($user); echo "\n\n";
+        //echo "email:\n"; print_r($email); echo "\n\n";
+        //echo "user:\n"; print_r($user); echo "\n\n";
+        //echo "user_id:\n"; print_r($user->getId()); echo "\n\n";
+        //die;
+        
 
         $response = $this->response->make(
             'passport', $user->getId(),
             function (Registration $registration) use ($user, $provider, $token) {
                 $registration
-                    ->provideTrustedEmail($email)
+                    ->provideTrustedEmail($this->email)
                     ->setPayload($user->toArray());
             }
         );
