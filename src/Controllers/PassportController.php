@@ -10,6 +10,7 @@ use Flarum\Forum\Auth\ResponseFactory;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -17,20 +18,28 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Flarum\Http\UrlGenerator;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 
+use Flarum\User\Command\RegisterUser;
+use Flarum\User\Exception\PermissionDeniedException;
+use Flarum\User\User;
+use Flarum\User\UserRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class PassportController implements RequestHandlerInterface
 {
     protected $settings;
     protected $response;
     protected $events;
     protected $url;
-    protected $email;
+    
+    private $users;
 
-    public function __construct(ResponseFactory $response, SettingsRepositoryInterface $settings, Dispatcher $events, UrlGenerator $url)
+    public function __construct(ResponseFactory $response, SettingsRepositoryInterface $settings, Dispatcher $events, UrlGenerator $url, UserRepository $users)
     {
         $this->response = $response;
         $this->settings = $settings;
         $this->events = $events;
         $this->url = $url;
+        $this->users = $users;
     }
 
     protected function getProvider($redirectUri)
@@ -83,31 +92,40 @@ class PassportController implements RequestHandlerInterface
 
         if (!$state || $state !== $session->get('oauth2state')) {
             $session->remove('oauth2state');
+            
             throw new Exception('Invalid state');
         }
 
         $token = $provider->getAccessToken('authorization_code', compact('code'));
         $user  = $provider->getResourceOwner($token);
-        $this->email = $provider->getEmailFromToken($token);
+        $email = $provider->getEmailFromToken($token);
         
         $session->put('id_token_identity', $token->getValues()['id_token']);
         
-        // -- test
-        //echo "<pre>";
-        //echo "provider:\n"; print_r($provider); echo "\n\n";
-        //echo "token:\n"; print_r($token); echo "\n\n";
-        //echo "user:\n"; print_r($user); echo "\n\n";
-        //echo "email:\n"; print_r($email); echo "\n\n";
-        //echo "user:\n"; print_r($user); echo "\n\n";
-        //echo "user_id:\n"; print_r($user->getId()); echo "\n\n";
-        //die;
+        // Register new user when nothing found
+        try {
+            $userFromIdentity = $this->users->findOrFailByUsername($user->getId());
+        } catch (ModelNotFoundException $e) {
+            $userFromIdentity = $this->users->findByIdentification($email ?? $user->getId());
+        }
         
+        if ($userFromIdentity === null) {
+            $userFromIdentity = User::register(
+                $user->getId(),
+                $email,
+                Str::random(20)
+            );
+            
+            $userFromIdentity->activate();
+            $userFromIdentity->save();
+        }
 
         $response = $this->response->make(
             'passport', $user->getId(),
-            function (Registration $registration) use ($user, $provider, $token) {
+            function (Registration $registration) use ($user, $provider, $token, $email) {
                 $registration
-                    ->provideTrustedEmail($this->email)
+                    ->provideTrustedEmail($email)
+                    ->provide('username', $user->getId())
                     ->setPayload($user->toArray());
             }
         );

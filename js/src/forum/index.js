@@ -17,4 +17,8 @@ app.initializers.add('fof-passport', () => {
             )
         );
     });
+    
+    extend(HeaderSecondary.prototype, 'items', (items) => {
+        items.remove('signUp');
+    });
 });

@@ -51,8 +51,6 @@ class LogoutMiddleware implements MiddlewareInterface
         if (!$actor->isGuest() and $path === $logout_url) {
             //$response = new RedirectResponse("$identity_logout_url?id_token_hint=$id_token&post_logout_redirect_uri=$flarum_logout_url");
             
-            
-            
             // Logout
             $this->authenticator->logOut($session);
             $actor->accessTokens()->delete();
