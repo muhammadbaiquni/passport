@@ -1,2 +1,159 @@
-module.exports=function(t){var e={};function r(p){if(e[p])return e[p].exports;var o=e[p]={i:p,l:!1,exports:{}};return t[p].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=t,r.c=e,r.d=function(t,e,p){r.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:p})},r.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},r.t=function(t,e){if(1&e&&(t=r(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var p=Object.create(null);if(r.r(p),Object.defineProperty(p,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)r.d(p,o,function(e){return t[e]}.bind(null,o));return p},r.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(e,"a",e),e},r.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},r.p="",r(r.s=5)}({0:function(t,e){t.exports=flarum.core.compat.app},5:function(t,e,r){"use strict";r.r(e);var p=r(0);r.n(p).a.initializers.add("fof-passport",(function(t){t.extensionData.for("fof-passport").registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.app-auth-url"),setting:"fof-passport.app_auth_url",type:"text",placeholder:"https://example.com/oauth/authorize"}).registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.app-token-url"),setting:"fof-passport.app_token_url",type:"text",placeholder:"https://example.com/oauth/token"}).registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.app-user-url"),setting:"fof-passport.app_user_url",type:"text",placeholder:"https://example.com/api/user"}).registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.app-id"),setting:"fof-passport.app_id",type:"text",placeholder:"123"}).registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.app-secret"),setting:"fof-passport.app_secret",type:"text",placeholder:"abcdefghijABCDEFGHIJabcdefghijABCDEFGHIJ"}).registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.app-scopes"),setting:"fof-passport.app_oauth_scopes",type:"text"}).registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.button-title"),setting:"fof-passport.button_title",type:"text",placeholder:t.translator.trans("fof-passport.admin.popup.field.button-title-placeholder")}).registerSetting({label:t.translator.trans("fof-passport.admin.popup.field.button-icon"),setting:"fof-passport.button_icon",type:"text",placeholder:"far fa-id-card"})}))}});
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./admin.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./admin.js":
+/*!******************!*\
+  !*** ./admin.js ***!
+  \******************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src_admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/admin */ "./src/admin/index.js");
+/* harmony import */ var _src_admin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_admin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _src_admin__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _src_admin__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./src/admin/index.js":
+/*!****************************!*\
+  !*** ./src/admin/index.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+app.initializers.add('tbbid-oauth-passport', function (app) {
+  app.extensionData["for"]('muhammadbaiquni-tbbid-oauth-passport').registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.app-auth-url'),
+    setting: 'fof-passport.app_auth_url',
+    type: 'text',
+    placeholder: 'https://example.com/oauth/authorize'
+  }).registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.app-token-url'),
+    setting: 'fof-passport.app_token_url',
+    type: 'text',
+    placeholder: 'https://example.com/oauth/token'
+  }).registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.app-user-url'),
+    setting: 'fof-passport.app_user_url',
+    type: 'text',
+    placeholder: 'https://example.com/api/user'
+  }).registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.app-id'),
+    setting: 'fof-passport.app_id',
+    type: 'text',
+    placeholder: '123'
+  }).registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.app-secret'),
+    setting: 'fof-passport.app_secret',
+    type: 'text',
+    placeholder: 'abcdefghijABCDEFGHIJabcdefghijABCDEFGHIJ'
+  }).registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.app-scopes'),
+    setting: 'fof-passport.app_oauth_scopes',
+    type: 'text'
+  }).registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.button-title'),
+    setting: 'fof-passport.button_title',
+    type: 'text',
+    placeholder: app.translator.trans('fof-passport.admin.popup.field.button-title-placeholder')
+  }).registerSetting({
+    label: app.translator.trans('fof-passport.admin.popup.field.button-icon'),
+    setting: 'fof-passport.button_icon',
+    type: 'text',
+    placeholder: 'far fa-id-card'
+  });
+});
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=admin.js.map
